@@ -39,35 +39,33 @@
     the output of the module will be 1 "high" as long as the counter's output value is less than the ouput duty cycle
     and when the counter exceeds the duty value the output of the module drops to zero, and that's it
     Now you have a Basic PWM module
-    
     and this is just a basic module which has some issues, 
     and will be solved @ the improved module
 
+
 - pwm_improved module
-> this module has two improvments rather than the basic 
-    1- frequency control over the PWM_signal
-    2- made the ouput signal synch. with the clk, 
-       and the meaning of that will be illustrated shortly  
+  > This module has two improvements rather than the basic.
+    1. Frequency control over the PWM signal.
+    2. Made the output signal synchronized with the clock.
 
-    - first improvement
-    
-    <!-- put the frequencey photo here -->
+    - First Improvement
+      ![PWM-freq-equation](https://github.com/eslamsolyman01/PWM-generator-module/assets/138836583/46ab2da8-e636-4ea1-a577-159b02b78a83)
 
-    >  here it explains how we can control the frequency of the PWM signal using a timer
-        we need to set a final value for this timer, and the equation relating this value with the Fpwm is shown in the slide
-        note that both the timer and the UP_counter both works with the system clock
+      > Here, it explains how we can control the frequency of the PWM signal using a timer.
+      We need to set a final value for this timer, and the equation relating this value
+      with the Fpwm is shown in the slide. Note that both the timer and the UP_counter
+      both work with the system clock.
 
+    - Second Improvement
+      ![image](https://github.com/eslamsolyman01/PWM-generator-module/assets/138836583/5c26406b-e9df-4f9d-b727-f9ee1dd3b08a)
 
-    - second improvement 
+      > The final improvement here is adding D_FF. At the up counter with the written values,
+      for example, there are 3 bits changing, and what might happen is one of them will change
+      after the rest, meaning the number entering the comparator at that moment is not correct,
+      which may cause a glitch. To ensure the counter value being compared is the right one,
+      we will use this D_FF, which will wait for the clock edge, at which we will have the right
+      values with no glitches.
 
-    <!-- put the D_ff screen here  -->
-
-    >the final improvement here is adding D_FF, and let me explain why
-        at the up counter with the written values for example there are 3 bit changing and what might happen is one of them 
-        will change after the rest, meaning the number entering the comparator at that moment is not correct which may cause a glitch 
-        and this is because the combinational circuit handels the operations much faster than the clock
-        so to make sure the counter value being compared is the right one we will use this D_FF which of course will wait
-        for the clock edge at which we will have the right values with no glitches
 
 - RGB_driver
 > this module utilizes the improved_PWM we created before 
@@ -84,7 +82,11 @@
   as you will notice from the time at the screen,
   the final value of the timer controls the period of the PWM_signal as expected
 
+        - timer_final_value= 128
+![timer_final_value= 128](https://github.com/eslamsolyman01/PWM-generator-module/assets/138836583/2f7e73a9-a710-450f-83d4-a335e01318a4 "timer_final_value= 128")
 
-  <!-- put the first figure -->
+ 
 
-  <!-- second figure -->
+
+        - timer_final_value= 1
+![timer_final_value=1](https://github.com/eslamsolyman01/PWM-generator-module/assets/138836583/8a79b2cb-b18c-4388-b677-9e7dd3330c3b "Timer Final Value = 1, difference can be noticed from the period time")
